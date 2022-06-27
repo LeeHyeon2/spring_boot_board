@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>update</h2>
+    <table>
+        <tr>
+            <th>id</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>내옹</th>
+            <th>조회수</th>
+        </tr>
+        <tr>
+            <form action="/board/update" method="post">
+                <input type="hidden" th:value="${boardDTO.boardPassword}" name="boardPassword">
+                <td><input type="text" th:value="${boardDTO.id}" name="id" readonly></td>
+                <td><input type="text" th:value="${boardDTO.boardTitle}" name="boardTitle"></td>
+                <td><input type="text" th:value="${boardDTO.boardWriter}" name="boardWriter"></td>
+                <td><input type="text" th:value="${boardDTO.boardContents}" name="boardContents"></td>
+                <td><input type="text" th:value="${boardDTO.boardHits}" name="boardHits" readonly></td>
+                <td><input type="submit" value="제출"></td>
+            </form>
+        </tr>
+    </table>
+</body>
+</html>

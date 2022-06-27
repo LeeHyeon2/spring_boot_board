@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>list</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>내옹</th>
+        <th>조회수</th>
+    </tr>
+    <tr th:each="boardDTO: ${boardDTOList}">
+        <td th:text="${boardDTO.id}"></td>
+        <td><a th:href="@{|/board/${boardDTO.id}}">[[${boardDTO.boardTitle}]]</a></td>
+        <td th:text="${boardDTO.boardWriter}"></td>
+        <td th:text="${boardDTO.boardContents}"></td>
+        <td th:text="${boardDTO.boardHits}"></td>
+    </tr>
+</table>
+</body>
+</html>

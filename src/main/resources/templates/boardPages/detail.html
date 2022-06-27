@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>detail</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>내옹</th>
+        <th>조회수</th>
+    </tr>
+    <tr>
+        <td th:text="${boardDTO.id}"></td>
+        <td th:text="${boardDTO.boardTitle}"></td>
+        <td th:text="${boardDTO.boardWriter}"></td>
+        <td th:text="${boardDTO.boardContents}"></td>
+        <td th:text="${boardDTO.boardHits}"></td>
+        <td><button th:onclick="update()">수정</button>
+        <button th:onclick="delete1()">삭제</button></td>
+    </tr>
+
+</table>
+<div id="passwordCheck"></div>
+</body>
+<script>
+    function update(){
+        let password = "<input type='text' name='boardPassword' id='boardPassword'>" + "<br>";
+        password += "<button onclick='submit(1)'>비밀번호 전송</button>" ;
+        document.getElementById("passwordCheck").innerHTML = password;
+    }
+    function delete1(){
+        let password = "<td>" + "<input type='text' name='boardPassword' id='boardPassword'>" + "</td>";
+        password += "<td>" + "<button onclick='submit(2)'>삭제완료</button>" + "</td>"
+        document.getElementById("passwordCheck").innerHTML = password;
+    }
+    function submit(num){
+        let password = document.getElementById("boardPassword").value;
+        if (password == "[[${boardDTO.boardPassword}]]"){
+            if (num==1){
+                location.href = "/board/update/"+[[${boardDTO.id}]];
+                alert("수정")
+            }else {
+                location.href = "/board/delete/"+[[${boardDTO.id}]];
+                alert("삭제")
+            }
+        }else {
+            alert("불일치")
+        }
+    }
+</script>
+</html>
