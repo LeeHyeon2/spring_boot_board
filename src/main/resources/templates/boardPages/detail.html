@@ -13,6 +13,8 @@
         <th>작성자</th>
         <th>내옹</th>
         <th>조회수</th>
+        <th>업로드시간</th>
+        <th>수정시간</th>
     </tr>
     <tr>
         <td th:text="${boardDTO.id}"></td>
@@ -20,6 +22,8 @@
         <td th:text="${boardDTO.boardWriter}"></td>
         <td th:text="${boardDTO.boardContents}"></td>
         <td th:text="${boardDTO.boardHits}"></td>
+        <td th:text="${boardDTO.createdTime}"></td>
+        <td th:text="${boardDTO.updateTime}"></td>
         <td><button th:onclick="update()">수정</button>
         <button th:onclick="delete1()">삭제</button></td>
     </tr>

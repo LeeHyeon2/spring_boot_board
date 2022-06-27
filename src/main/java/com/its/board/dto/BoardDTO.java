@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,8 @@ public class BoardDTO {
     private String boardPassword;
     private String boardContents;
     private int boardHits;
-
+    private LocalDateTime createdTime;
+    private LocalDateTime updateTime;
     public BoardDTO(String boardTitle, String boardWriter, String boardPassword, String boardContents) {
         this.boardTitle = boardTitle;
         this.boardWriter = boardWriter;
@@ -26,6 +28,14 @@ public class BoardDTO {
         this.boardContents = boardContents;
     }
 
+
+    public BoardDTO(Long id, String boardTitle, String boardWriter, int boardHits, LocalDateTime createdTime) {
+        this.id = id;
+        this.boardTitle = boardTitle;
+        this.boardWriter = boardWriter;
+        this.boardHits = boardHits;
+        this.createdTime = createdTime;
+    }
 
     public static BoardDTO toDTO(BoardEntity entity) {
         BoardDTO boardDTO = new BoardDTO();
@@ -35,6 +45,8 @@ public class BoardDTO {
         boardDTO.setBoardPassword(entity.getBoardPassword());
         boardDTO.setBoardContents(entity.getBoardContents());
         boardDTO.setBoardHits(entity.getBoardHits());
+        boardDTO.setCreatedTime(entity.getCreatedTime());
+        boardDTO.setUpdateTime(entity.getUpdatedTime());
         return boardDTO;
     }
 }
