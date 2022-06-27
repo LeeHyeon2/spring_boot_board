@@ -68,6 +68,10 @@ public class BoardController {
         return "redirect:/board/" + boardDTO.getId();
     }
 
+
+    // /board?page=1
+    // /board/3/1
+    // rest api : 주소값만으로 자원을 식별 /board/10
     @GetMapping
     public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
         Page<BoardDTO> boardList = boardService.paging(pageable);
