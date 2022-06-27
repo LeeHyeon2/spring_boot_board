@@ -4,6 +4,7 @@ import com.its.board.entity.BoardEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,6 +22,10 @@ public class BoardDTO {
     private int boardHits;
     private LocalDateTime createdTime;
     private LocalDateTime updateTime;
+
+    private MultipartFile boardFile; // 실제 파일
+    private String boardFileName; // 파일 이름
+
     public BoardDTO(String boardTitle, String boardWriter, String boardPassword, String boardContents) {
         this.boardTitle = boardTitle;
         this.boardWriter = boardWriter;
@@ -47,6 +52,7 @@ public class BoardDTO {
         boardDTO.setBoardHits(entity.getBoardHits());
         boardDTO.setCreatedTime(entity.getCreatedTime());
         boardDTO.setUpdateTime(entity.getUpdatedTime());
+        boardDTO.setBoardFileName(entity.getBoardFileName());
         return boardDTO;
     }
 }

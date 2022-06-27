@@ -7,11 +7,12 @@
 <body>
     <h2>save</h2>
 
-    <form action="/board/save" method="post">
+    <form action="/board/save" method="post" enctype="multipart/form-data">
         <input type="text" name="boardWriter" placeholder=""><br>
         <input type="text" name="boardTitle"><br>
         <input type="text" name="boardPassword"><br>
         <textarea name="boardContents"></textarea><br>
+        <input type="file" name="boardFile"><br>
         <input type="submit" value="글 작성">
     </form>
 </body>

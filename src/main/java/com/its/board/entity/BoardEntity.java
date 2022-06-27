@@ -27,12 +27,16 @@ public class BoardEntity extends BaseEntity {
     @ColumnDefault("0") //default 0
     private int boardHits;
 
+    @Column
+    private String boardFileName;
+
     public static BoardEntity toEntity(BoardDTO boardDTO){
         BoardEntity boardEntity = new BoardEntity();
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardWriter(boardDTO.getBoardWriter());
         boardEntity.setBoardPassword(boardDTO.getBoardPassword());
         boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardFileName(boardDTO.getBoardFileName());
         return boardEntity;
     }
 

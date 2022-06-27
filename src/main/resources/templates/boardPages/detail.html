@@ -15,6 +15,7 @@
         <th>조회수</th>
         <th>업로드시간</th>
         <th>수정시간</th>
+        <th>첨부파일</th>
     </tr>
     <tr>
         <td th:text="${boardDTO.id}"></td>
@@ -24,6 +25,7 @@
         <td th:text="${boardDTO.boardHits}"></td>
         <td th:text="${boardDTO.createdTime}"></td>
         <td th:text="${boardDTO.updateTime}"></td>
+        <td><img th:src="@{|/upload/${boardDTO.boardFileName}|}" width="100" height="100" alt=""></td>
         <td><button th:onclick="update()">수정</button>
         <button th:onclick="delete1()">삭제</button></td>
     </tr>

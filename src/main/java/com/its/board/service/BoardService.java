@@ -11,8 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.parser.Entity;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +24,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
-    public void save(BoardDTO boardDTO) {
+    public void save(BoardDTO boardDTO) throws IOException {
+        MultipartFile boardFile = boardDTO.getBoardFile();
+        String boardFileName = boardFile.getOriginalFilename();
+        boardFileName = System.currentTimeMillis() + "_" + boardFileName;
+        String savePath = "C:\\spring_img\\" + boardFileName;
+        if(!boardFile.isEmpty()){
+            boardFile.transferTo(new File(savePath));
+        }
+        boardDTO.setBoardFileName(boardFileName);
         boardRepository.save(BoardEntity.toEntity(boardDTO));
     }
 
