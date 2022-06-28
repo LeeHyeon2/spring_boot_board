@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="header">
+    <meta charset="UTF-8">
+    <title>header</title>
+    <style>
+        #header{
+            background-color: red;
+        }
+    </style>
+    <div id="header">
+        헤더 부분 입니다
+        <!-- 로그인 o
+            1. 관리자(admin)라면 관리자모드 링크 보임.
+            2. 관리자가 아니라면 로그아웃 보임
+            로그인 x
+            1. 회원가입 링크보임-->
+        <div th:if="${session.loginEmail}">
+            <div th:if="${session.loginEmail.toString().equals('test')}">
+                <a href="#">관리자 모드</a>
+            </div>
+            <div th:if="!${session.loginEmail.toString().equals('test')}">
+                <a href="#">test 아닐때</a>
+            </div>
+            <div>
+                로그아웃
+            </div>
+        </div>
+        <div th:unless="${session.loginEmail}">
+            <a href="#">로그인</a>
+        </div>
+    </div>
+</th:block>
+</html>

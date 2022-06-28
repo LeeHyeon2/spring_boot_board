@@ -19,3 +19,6 @@ spring:
 
   thymeleaf:
     cache: false
+# mybatis 설정
+mybatis:
+  mapper-locations: mapper/*.xml

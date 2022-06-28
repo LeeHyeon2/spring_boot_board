@@ -3,7 +3,9 @@ package com.its.board.service;
 import com.its.board.common.PagingConst;
 import com.its.board.dto.BoardDTO;
 import com.its.board.entity.BoardEntity;
+import com.its.board.entity.MemberEntity;
 import com.its.board.repository.BoardRepository;
+import com.its.board.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
     public void save(BoardDTO boardDTO) throws IOException {
         MultipartFile boardFile = boardDTO.getBoardFile();
         String boardFileName = boardFile.getOriginalFilename();
@@ -33,9 +36,17 @@ public class BoardService {
             boardFile.transferTo(new File(savePath));
         }
         boardDTO.setBoardFileName(boardFileName);
-        boardRepository.save(BoardEntity.toEntity(boardDTO));
+
+        // toEntity 메서드에 회원 엔티티를 같이 전달해야 함. (로그인 이메일이 작성자와 동일하다는 전제조건)
+        Optional<MemberEntity> optionalMemberEntity =
+                memberRepository.findByMemberEmail(boardDTO.getBoardWriter());
+        if (optionalMemberEntity.isPresent()){
+            MemberEntity memberEntity = optionalMemberEntity.get();
+            boardRepository.save(BoardEntity.toEntity(boardDTO,memberEntity));
+        }
     }
 
+    @Transactional
     public List<BoardDTO> findAll() {
         List<BoardEntity> entities = boardRepository.findAll();
         List<BoardDTO> boardDTOS = new ArrayList<>();
@@ -57,7 +68,7 @@ public class BoardService {
     }
 
     public void update(BoardDTO boardDTO) {
-        BoardEntity boardEntity = BoardEntity.toEntity(boardDTO);
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
         boardEntity.setId(boardDTO.getId());
         boardRepository.save(boardEntity);
     }
@@ -85,5 +96,14 @@ public class BoardService {
                         board.getCreatedTime()
                 ));
         return boardList;
+    }
+
+    public List<BoardDTO> search(String q) {
+        List<BoardEntity> byBoardTitleContaining = boardRepository.findByBoardTitleContaining(q);
+        List<BoardDTO> boardDTOS = new ArrayList<>();
+        for (BoardEntity boardEntity: byBoardTitleContaining){
+            boardDTOS.add(BoardDTO.toDTO(boardEntity));
+        }
+        return boardDTOS;
     }
 }
